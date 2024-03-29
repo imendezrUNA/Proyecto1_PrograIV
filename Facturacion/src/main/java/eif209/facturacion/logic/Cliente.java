@@ -7,7 +7,7 @@ import java.util.Objects;
 
 @Entity
 public class Cliente {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "ID")
     private long id;

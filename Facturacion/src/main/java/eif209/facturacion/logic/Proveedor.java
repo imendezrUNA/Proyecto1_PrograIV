@@ -7,7 +7,7 @@ import java.util.Objects;
 
 @Entity
 public class Proveedor {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "ID")
     private long id;

@@ -4,6 +4,8 @@ import eif209.facturacion.data.ClienteRepository;
 import eif209.facturacion.data.ProveedorRepository;
 import eif209.facturacion.data.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.Optional;
 
 @org.springframework.stereotype.Service("service")
@@ -14,6 +16,13 @@ public class Service {
     private ProveedorRepository proveedorRepository;
     @Autowired
     private ClienteRepository clienteRepository;
+
+    @Transactional
+    public Proveedor registrarProveedorYUsuario(Usuario usuario, Proveedor proveedor) {
+        Usuario usuarioCreado = usuarioRepository.save(usuario);
+        proveedor.setUsuarioByUsuarioId(usuarioCreado);
+        return proveedorRepository.save(proveedor);
+    }
 
     public boolean existeUsuario(String nombreUsuario) {
         return usuarioRepository.findByNombreUsuario(nombreUsuario) != null;

@@ -38,10 +38,9 @@ public class Controller {
         // Crear el usuario
         Usuario nuevoUsuario = new Usuario();
         nuevoUsuario.setNombreUsuario(nombreUsuario);
-        nuevoUsuario.setContrasena(contrasena); // Texto plano
+        nuevoUsuario.setContrasena(contrasena); // texto plano
         nuevoUsuario.setEstado("activo");
         nuevoUsuario.setRol("proveedor");
-        Usuario creadoUsuario = service.crearUsuario(nuevoUsuario);
 
         // Crear el proveedor
         Proveedor nuevoProveedor = new Proveedor();
@@ -50,10 +49,14 @@ public class Controller {
         nuevoProveedor.setCorreoElectronico(correoElectronico);
         nuevoProveedor.setNumeroTelefono(numeroTelefono);
         nuevoProveedor.setDireccion(direccion);
-        nuevoProveedor.setUsuarioByUsuarioId(creadoUsuario); // Asegurarse de que Proveedor tenga un campo para almacenar el usuario asociado correctamente
-        service.crearProveedor(nuevoProveedor);
 
-        // Redirigir a la página de login después del registro exitoso
-        return new ModelAndView("redirect:/presentation/login/View");
+        try {
+            service.registrarProveedorYUsuario(nuevoUsuario, nuevoProveedor);
+            return new ModelAndView("redirect:/presentation/login/View");
+        } catch (Exception e) {
+            ModelAndView mav = new ModelAndView("presentation/registro/View");
+            mav.addObject("error", "No se pudo registrar. Intente de nuevo.");
+            return mav;
+        }
     }
 }
