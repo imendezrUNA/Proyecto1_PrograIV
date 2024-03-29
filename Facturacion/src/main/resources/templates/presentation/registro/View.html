@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Facturación</title>
+    <link rel="stylesheet" href="/css/style.css" th:href="@{/css/style.css}">
+</head>
+<body>
+    <header th:replace="~{fragments/header :: header}"></header>
+    <div class="body">
+        <section id="registro">
+            <h2>Registrar nuevo proveedor</h2>
+            <form th:action="@{/presentation/registro/register}" method="post">
+                <label for="id">Cédula Física o Jurídica:</label>
+                <input type="text" id="id" name="id" required>
+
+                <label for="nombre">Nombre o Razón Social:</label>
+                <input type="text" id="nombre" name="nombre" required>
+
+                <label for="correoElectronico">Correo Electrónico:</label>
+                <input type="email" id="correoElectronico" name="correoElectronico" required>
+
+                <label for="numeroTelefono">Número de Teléfono:</label>
+                <input type="text" id="numeroTelefono" name="numeroTelefono" required>
+
+                <label for="direccion">Dirección:</label>
+                <input type="text" id="direccion" name="direccion" required>
+
+                <label for="nombreUsuarioRegistro">Nombre de Usuario:</label>
+                <input type="text" id="nombreUsuarioRegistro" name="nombreUsuario" required>
+
+                <label for="contrasenaRegistro">Contraseña:</label>
+                <input type="password" id="contrasenaRegistro" name="contrasena" required>
+
+                <button type="submit">Registrar</button>
+            </form>
+        </section>
+    </div>
+    <footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+</html>

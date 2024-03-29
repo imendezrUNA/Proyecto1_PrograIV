@@ -23,8 +23,8 @@ public class Usuario {
     @Basic
     @Column(name = "rol")
     private Object rol;
-    @OneToMany(mappedBy = "usuarioByUsuarioId")
-    private Collection<Proveedor> proveedorsById;
+    @OneToOne(mappedBy = "usuarioByUsuarioId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Proveedor proveedor;
 
     public int getId() {
         return id;
@@ -79,11 +79,11 @@ public class Usuario {
         return Objects.hash(id, nombreUsuario, contrasena, estado, rol);
     }
 
-    public Collection<Proveedor> getProveedorsById() {
-        return proveedorsById;
+    public Proveedor getProveedor() {
+        return proveedor;
     }
 
-    public void setProveedorsById(Collection<Proveedor> proveedorsById) {
-        this.proveedorsById = proveedorsById;
+    public void setProveedor(Proveedor proveedor) {
+        this.proveedor = proveedor;
     }
 }

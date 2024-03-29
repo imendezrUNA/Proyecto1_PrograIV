@@ -27,7 +27,7 @@ public class Proveedor {
     private Collection<Factura> facturasById;
     @OneToMany(mappedBy = "proveedorByProveedorId")
     private Collection<Producto> productosById;
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "usuarioID", referencedColumnName = "ID", nullable = false)
     private Usuario usuarioByUsuarioId;
 
