@@ -1,6 +1,10 @@
 package eif209.facturacion.logic;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
 
 import java.math.BigDecimal;
 import java.util.Collection;
@@ -12,14 +16,17 @@ public class Producto {
     @Id
     @Column(name = "ID")
     private int id;
-    @Basic
-    @Column(name = "nombre")
+    @NotBlank(message = "El nombre del producto no puede estar en blanco")
+    @Size(max = 50, message = "El nombre del producto no puede tener más de 50 caracteres")
+    @Column(name = "nombre", nullable = false)
     private String nombre;
-    @Basic
-    @Column(name = "descripcion")
+    @NotBlank(message = "La descripción del producto no puede estar en blanco")
+    @Size(max = 255, message = "La descripción del producto no puede tener más de 255 caracteres")
+    @Column(name = "descripcion", nullable = false)
     private String descripcion;
-    @Basic
-    @Column(name = "precio")
+    @NotNull(message = "El precio del producto no puede ser nulo")
+    @Positive(message = "El precio del producto debe ser un número positivo")
+    @Column(name = "precio", nullable = false)
     private BigDecimal precio;
     @OneToMany(mappedBy = "productoByProductoId")
     private Collection<Detallefactura> detallefacturasById;

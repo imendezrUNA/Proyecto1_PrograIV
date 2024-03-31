@@ -1,28 +1,43 @@
 package eif209.facturacion.logic;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 import java.util.Collection;
 import java.util.Objects;
 
 @Entity
 public class Usuario {
+    public enum Estado {
+        ACTIVO, INACTIVO, PENDIENTE;
+    }
+
+    public enum Rol {
+        ADMINISTRADOR, PROVEEDOR;
+    }
+
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "ID")
     private int id;
-    @Basic
-    @Column(name = "nombreUsuario")
+    @NotBlank(message = "El nombre de usuario no puede estar en blanco")
+    @Size(max = 50, message = "El nombre de usuario no puede tener más de 50 caracteres")
+    @Column(name = "nombreUsuario", unique = true, nullable = false)
     private String nombreUsuario;
-    @Basic
-    @Column(name = "contrasena")
+    @NotBlank(message = "La contraseña no puede estar en blanco")
+    @Size(min = 8, message = "La contraseña debe tener al menos 8 caracteres")
+    @Column(name = "contrasena", nullable = false)
     private String contrasena;
-    @Basic
-    @Column(name = "estado")
-    private Object estado;
-    @Basic
-    @Column(name = "rol")
-    private Object rol;
+    @NotNull(message = "El estado no puede ser nulo")
+    @Column(name = "estado", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Estado estado;
+    @NotNull(message = "El rol no puede ser nulo")
+    @Column(name = "rol", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Rol rol;
     @OneToOne(mappedBy = "usuarioByUsuarioId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Proveedor proveedor;
 
@@ -55,7 +70,7 @@ public class Usuario {
     }
 
     public void setEstado(Object estado) {
-        this.estado = estado;
+        this.estado = (Estado) estado;
     }
 
     public Object getRol() {
@@ -63,7 +78,7 @@ public class Usuario {
     }
 
     public void setRol(Object rol) {
-        this.rol = rol;
+        this.rol = (Rol) rol;
     }
 
     @Override

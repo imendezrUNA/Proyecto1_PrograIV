@@ -9,8 +9,9 @@
     <header th:replace="~{fragments/header :: header}"></header>
     <div class="body">
         <section id="registro">
-            <h2>Registrar nuevo proveedor</h2>
-            <form th:action="@{/presentation/registro/register}" method="post">
+            <h2>Regístrese como proveedor</h2>
+            <form th:action="@{/presentation/registro/register}" method="post" th:object="${proveedor}">
+                <div th:if="${error}" th:text="${error}" class="error"></div>
                 <label for="id">Cédula Física o Jurídica:</label>
                 <input type="text" id="id" name="id" required>
 

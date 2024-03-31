@@ -4,9 +4,9 @@ USE Facturacion;
 CREATE TABLE Usuario (
     ID INT AUTO_INCREMENT NOT NULL,
     nombreUsuario VARCHAR(50) NOT NULL UNIQUE,
-    contrasena VARCHAR(255) NOT NULL, -- Hash de contraseña
-    estado ENUM('activo', 'inactivo', 'pendiente') NOT NULL DEFAULT 'pendiente',
-    rol ENUM('administrador', 'proveedor') NOT NULL,
+    contrasena VARCHAR(255) NOT NULL, -- Hash de contraseña (si se logra implementar xd)
+    estado ENUM('ACTIVO', 'INACTIVO', 'PENDIENTE') NOT NULL DEFAULT 'PENDIENTE',
+    rol ENUM('ADMINISTRADOR', 'PROVEEDOR') NOT NULL,
     PRIMARY KEY (ID)
 );
 
@@ -14,8 +14,8 @@ CREATE TABLE Proveedor (
     ID BIGINT NOT NULL, -- Ced. identidad física o jurídica sin guiones
     usuarioID INT NOT NULL,
     nombre VARCHAR(100) NOT NULL,
-    correoElectronico VARCHAR(255) NOT NULL,
-    numeroTelefono VARCHAR(20) NOT NULL,
+    correoElectronico VARCHAR(255) NOT NULL UNIQUE,
+    numeroTelefono VARCHAR(8) NOT NULL UNIQUE,
     direccion VARCHAR(255),
     PRIMARY KEY (ID),
     FOREIGN KEY (usuarioID) REFERENCES Usuario(ID)
@@ -24,8 +24,8 @@ CREATE TABLE Proveedor (
 CREATE TABLE Cliente (
     ID BIGINT NOT NULL, -- Ced. identidad física o jurídica sin guiones
     nombre VARCHAR(100) NOT NULL,
-    correoElectronico VARCHAR(255) NOT NULL,
-    numeroTelefono VARCHAR(20) NOT NULL,
+    correoElectronico VARCHAR(255) NOT NULL UNIQUE,
+    numeroTelefono VARCHAR(8) NOT NULL UNIQUE,
     direccion VARCHAR(255),
     PRIMARY KEY (ID)
 );

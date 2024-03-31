@@ -16,7 +16,7 @@ public class Controller {
     private Service service;
 
     @GetMapping("/presentation/login/show")
-    public String showLoginView() {
+    public String show() {
         return "presentation/login/View";
     }
 
@@ -27,18 +27,18 @@ public class Controller {
         if (usuarioDBOpt.isPresent() && contrasena.equals(usuarioDBOpt.get().getContrasena())) {
             Usuario usuarioDB = usuarioDBOpt.get();
             httpSession.setAttribute("usuario", usuarioDB);
-            if ("proveedor".equals(usuarioDB.getRol()) && "activo".equals(usuarioDB.getEstado().toString())) {
+            if (Usuario.Rol.PROVEEDOR.equals(usuarioDB.getRol()) && Usuario.Estado.ACTIVO.equals(usuarioDB.getEstado())) {
                 return "redirect:/presentation/facturar/show";
-            } else if ("administrador".equals(usuarioDB.getRol()) && "activo".equals(usuarioDB.getEstado().toString())) {
+            } else if (Usuario.Rol.ADMINISTRADOR.equals(usuarioDB.getRol()) && Usuario.Estado.ACTIVO.equals(usuarioDB.getEstado())) {
                 return "redirect:/presentation/proveedores/show";
             }
         }
-        return "redirect:/presentation/login/View?error=true";
+        return "redirect:/presentation/login/show?error=true";
     }
 
     @GetMapping("/presentation/login/logout")
     public String logout(HttpSession httpSession) {
         httpSession.invalidate();
-        return "redirect:/presentation/login/View";
+        return "redirect:/presentation/login/show";
     }
 }

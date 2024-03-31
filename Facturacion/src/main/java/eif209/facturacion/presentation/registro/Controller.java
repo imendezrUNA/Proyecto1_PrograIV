@@ -2,12 +2,11 @@ package eif209.facturacion.presentation.registro;
 
 import eif209.facturacion.logic.Proveedor;
 import eif209.facturacion.logic.Service;
-import eif209.facturacion.logic.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @org.springframework.stereotype.Controller("registro")
 public class Controller {
@@ -15,48 +14,18 @@ public class Controller {
     private Service service;
 
     @GetMapping("/presentation/registro/show")
-    public String showRegistroForm() {
+    public String show() {
         return "presentation/registro/View";
     }
 
     @PostMapping("/presentation/registro/register")
-    public ModelAndView register(
-            @RequestParam("id") Long id,
-            @RequestParam("nombre") String nombre,
-            @RequestParam("correoElectronico") String correoElectronico,
-            @RequestParam("numeroTelefono") String numeroTelefono,
-            @RequestParam("direccion") String direccion,
-            @RequestParam("nombreUsuario") String nombreUsuario,
-            @RequestParam("contrasena") String contrasena) {
-        if (service.existeUsuario(nombreUsuario)) {
-            // Nombre de usuario ya existente, redirige a formulario con mensaje de error
-            ModelAndView mav = new ModelAndView("presentation/registro/View");
-            mav.addObject("error", "El nombre de usuario ya existe");
-            return mav;
+    public String registrarProveedor(Proveedor proveedor, @RequestParam("nombreUsuario") String nombreUsuario,
+                                     @RequestParam("contrasena") String contrasena, RedirectAttributes redirectAttributes) {
+        boolean registroExitoso = service.registrarProveedorYUsuario(proveedor, nombreUsuario, contrasena);
+        if (!registroExitoso) {
+            redirectAttributes.addFlashAttribute("error", "El ID del proveedor ya existe.");
+            return "redirect:/presentation/registro/show";
         }
-
-        // Crear el usuario
-        Usuario nuevoUsuario = new Usuario();
-        nuevoUsuario.setNombreUsuario(nombreUsuario);
-        nuevoUsuario.setContrasena(contrasena); // texto plano
-        nuevoUsuario.setEstado("activo");
-        nuevoUsuario.setRol("proveedor");
-
-        // Crear el proveedor
-        Proveedor nuevoProveedor = new Proveedor();
-        nuevoProveedor.setId(id);
-        nuevoProveedor.setNombre(nombre);
-        nuevoProveedor.setCorreoElectronico(correoElectronico);
-        nuevoProveedor.setNumeroTelefono(numeroTelefono);
-        nuevoProveedor.setDireccion(direccion);
-
-        try {
-            service.registrarProveedorYUsuario(nuevoUsuario, nuevoProveedor);
-            return new ModelAndView("redirect:/presentation/login/View");
-        } catch (Exception e) {
-            ModelAndView mav = new ModelAndView("presentation/registro/View");
-            mav.addObject("error", "No se pudo registrar. Intente de nuevo.");
-            return mav;
-        }
+        return "redirect:/presentation/login/show";
     }
 }

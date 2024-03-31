@@ -1,6 +1,8 @@
 package eif209.facturacion.logic;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 
 import java.math.BigDecimal;
 import java.sql.Date;
@@ -13,10 +15,10 @@ public class Factura {
     @Id
     @Column(name = "ID")
     private int id;
-    @Basic
-    @Column(name = "fecha")
+    @NotNull(message = "La fecha de la factura no puede ser nula")
+    @Column(name = "fecha", nullable = false)
     private Date fecha;
-    @Basic
+    @Positive(message = "El total de la factura debe ser un número positivo")
     @Column(name = "total")
     private BigDecimal total;
     @OneToMany(mappedBy = "facturaByFacturaId")

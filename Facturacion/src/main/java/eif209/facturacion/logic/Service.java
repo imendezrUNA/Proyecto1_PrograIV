@@ -18,22 +18,24 @@ public class Service {
     private ClienteRepository clienteRepository;
 
     @Transactional
-    public Proveedor registrarProveedorYUsuario(Usuario usuario, Proveedor proveedor) {
-        Usuario usuarioCreado = usuarioRepository.save(usuario);
-        proveedor.setUsuarioByUsuarioId(usuarioCreado);
-        return proveedorRepository.save(proveedor);
-    }
+    public boolean registrarProveedorYUsuario(Proveedor proveedor, String nombreUsuario, String contrasena) {
+        // Verificar si ya existe un proveedor con el mismo ID
+        if (proveedorRepository.findById(proveedor.getId()).isPresent()) {
+            return false;
+        }
 
-    public boolean existeUsuario(String nombreUsuario) {
-        return usuarioRepository.findByNombreUsuario(nombreUsuario) != null;
-    }
+        // Si el proveedor NO existe
+        Usuario usuario = new Usuario();
+        usuario.setNombreUsuario(nombreUsuario);
+        usuario.setContrasena(contrasena); // texto plano momentáneamente
+        usuario.setEstado(Usuario.Estado.PENDIENTE);
+        usuario.setRol(Usuario.Rol.PROVEEDOR);
+        usuarioRepository.save(usuario);
 
-    public Usuario crearUsuario(Usuario usuario) {
-        return usuarioRepository.save(usuario);
-    }
+        proveedor.setUsuarioByUsuarioId(usuario);
+        proveedorRepository.save(proveedor);
 
-    public Proveedor crearProveedor(Proveedor proveedor) {
-        return proveedorRepository.save(proveedor);
+        return true;
     }
 
     public Optional<Usuario> usuarioRead(String nombreUsuario) {

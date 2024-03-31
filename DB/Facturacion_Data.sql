@@ -2,10 +2,10 @@ USE Facturacion;
 
 -- Insertar usuarios
 INSERT INTO Usuario (nombreUsuario, contrasena, estado, rol) VALUES
-('admin', 'password', 'activo', 'administrador'),
-('proveedor1', 'password', 'activo', 'proveedor'),
-('proveedor2', 'password', 'inactivo', 'proveedor'),
-('proveedor3', 'password', 'pendiente', 'proveedor');
+('admin', 'password', 'ACTIVO', 'ADMINISTRADOR'),
+('proveedor1', 'password', 'ACTIVO', 'PROVEEDOR'),
+('proveedor2', 'password', 'INACTIVO', 'PROVEEDOR'),
+('proveedor3', 'password', 'PENDIENTE', 'PROVEEDOR');
 
 -- Insertar proveedores con sus respectivos usuarios
 INSERT INTO Proveedor (ID, usuarioID, nombre, correoElectronico, numeroTelefono, direccion) VALUES

@@ -1,33 +1,40 @@
 package eif209.facturacion.logic;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 import java.util.Collection;
 import java.util.Objects;
 
 @Entity
 public class Proveedor {
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "ID")
     private long id;
-    @Basic
-    @Column(name = "nombre")
+    @NotBlank(message = "El nombre no puede estar en blanco")
+    @Size(max = 100, message = "El nombre no puede tener más de 100 caracteres")
+    @Column(name = "nombre", nullable = false)
     private String nombre;
-    @Basic
-    @Column(name = "correoElectronico")
+    @NotBlank(message = "El correo electrónico no puede estar en blanco")
+    @Email(message = "El correo electrónico debe ser válido")
+    @Size(max = 255, message = "El correo electrónico no puede tener más de 255 caracteres")
+    @Column(name = "correoElectronico", nullable = false)
     private String correoElectronico;
-    @Basic
-    @Column(name = "numeroTelefono")
+    @NotBlank(message = "El número de teléfono no puede estar en blanco")
+    @Pattern(regexp = "^(\\+506)?[2-8]\\d{7}$", message = "El número de teléfono debe tener el formato correcto")
+    @Column(name = "numeroTelefono", nullable = false)
     private String numeroTelefono;
-    @Basic
+    @Size(max = 255, message = "La dirección no puede tener más de 255 caracteres")
     @Column(name = "direccion")
     private String direccion;
-    @OneToMany(mappedBy = "proveedorByProveedorId")
+    @OneToMany(mappedBy = "proveedorByProveedorId", fetch = FetchType.LAZY)
     private Collection<Factura> facturasById;
-    @OneToMany(mappedBy = "proveedorByProveedorId")
+    @OneToMany(mappedBy = "proveedorByProveedorId", fetch = FetchType.LAZY)
     private Collection<Producto> productosById;
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "usuarioID", referencedColumnName = "ID", nullable = false)
     private Usuario usuarioByUsuarioId;
 

@@ -1,6 +1,8 @@
 package eif209.facturacion.logic;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 
 import java.math.BigDecimal;
 import java.util.Objects;
@@ -11,14 +13,16 @@ public class Detallefactura {
     @Id
     @Column(name = "ID")
     private int id;
-    @Basic
-    @Column(name = "cantidad")
+    @NotNull(message = "La cantidad no puede ser nula")
+    @Positive(message = "La cantidad debe ser un número positivo")
+    @Column(name = "cantidad", nullable = false)
     private int cantidad;
-    @Basic
-    @Column(name = "precioUnitario")
+    @NotNull(message = "El precio unitario no puede ser nulo")
+    @Positive(message = "El precio unitario debe ser mayor que cero")
+    @Column(name = "precioUnitario", nullable = false)
     private BigDecimal precioUnitario;
-    @Basic
-    @Column(name = "subtotal")
+    @Transient //Se calcula automáticamente a partir de la cantidad y el precio unitario con getSubtotal()
+    //@Column(name = "subtotal")
     private BigDecimal subtotal;
     @ManyToOne
     @JoinColumn(name = "facturaID", referencedColumnName = "ID", nullable = false)
@@ -51,8 +55,15 @@ public class Detallefactura {
         this.precioUnitario = precioUnitario;
     }
 
-    public BigDecimal getSubtotal() {
+    /*public BigDecimal getSubtotal() {
         return subtotal;
+    }*/
+
+    public BigDecimal getSubtotal() {
+        if (precioUnitario != null) {
+            return precioUnitario.multiply(BigDecimal.valueOf(cantidad));
+        }
+        return BigDecimal.ZERO;
     }
 
     public void setSubtotal(BigDecimal subtotal) {
