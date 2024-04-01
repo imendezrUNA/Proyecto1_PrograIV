@@ -3,6 +3,7 @@ package eif209.facturacion.logic;
 import eif209.facturacion.data.ClienteRepository;
 import eif209.facturacion.data.ProveedorRepository;
 import eif209.facturacion.data.UsuarioRepository;
+import eif209.facturacion.dto.ProveedorRegistroDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,33 +19,46 @@ public class Service {
     private ClienteRepository clienteRepository;
 
     @Transactional
-    public boolean registrarProveedorYUsuario(Proveedor proveedor, String nombreUsuario, String contrasena) {
-        // Verificar si ya existe un proveedor con el mismo ID
-        if (proveedorRepository.findById(proveedor.getId()).isPresent()) {
+    public boolean registrarProveedorYUsuario(ProveedorRegistroDTO registroDTO) {
+        // Verificar si ya existe un usuario con el mismo username
+        if (usuarioRepository.findByNombreUsuario(registroDTO.getNombreUsuario()).isPresent()) {
             return false;
         }
 
-        // Si el proveedor NO existe
-        Usuario usuario = new Usuario();
-        usuario.setNombreUsuario(nombreUsuario);
-        usuario.setContrasena(contrasena); // texto plano momentáneamente
-        usuario.setEstado(Usuario.Estado.PENDIENTE);
-        usuario.setRol(Usuario.Rol.PROVEEDOR);
-        usuarioRepository.save(usuario);
+        // Verificar si ya existe un proveedor con el mismo ID
+        if (proveedorRepository.findById(Long.valueOf(registroDTO.getIdProveedor())).isPresent()) {
+            return false;
+        }
 
-        proveedor.setUsuarioByUsuarioId(usuario);
-        proveedorRepository.save(proveedor);
+        // Crear el nuevo Usuario
+        Usuario nuevoUsuario = new Usuario();
+        nuevoUsuario.setNombreUsuario(registroDTO.getNombreUsuario());
+        nuevoUsuario.setContrasena(registroDTO.getContrasena()); // texto plano
+        nuevoUsuario.setEstado(Usuario.Estado.PENDIENTE);
+        nuevoUsuario.setRol(Usuario.Rol.PROVEEDOR);
+
+        // Crear el nuevo Proveedor
+        Proveedor nuevoProveedor = new Proveedor();
+        nuevoProveedor.setId(Long.parseLong(registroDTO.getIdProveedor()));
+        nuevoProveedor.setNombre(registroDTO.getNombreProveedor());
+        nuevoProveedor.setCorreoElectronico(registroDTO.getCorreoElectronico());
+        nuevoProveedor.setNumeroTelefono(registroDTO.getNumeroTelefono());
+        nuevoProveedor.setDireccion(registroDTO.getDireccion());
+        nuevoProveedor.setUsuarioByUsuarioId(nuevoUsuario); // Asociar el usuario al proveedor
+
+        // Guardar las entidades en la db
+        usuarioRepository.save(nuevoUsuario);
+        proveedorRepository.save(nuevoProveedor);
 
         return true;
     }
 
     public Optional<Usuario> usuarioRead(String nombreUsuario) {
-        Usuario usuario = usuarioRepository.findByNombreUsuario(nombreUsuario);
-        return Optional.ofNullable(usuario);
+        return usuarioRepository.findByNombreUsuario(nombreUsuario);
     }
 
     public Optional<Proveedor> proveedorRead(int usuarioId) {
-        return Optional.ofNullable(proveedorRepository.findByUsuarioByUsuarioId_Id(usuarioId));
+        return proveedorRepository.findByUsuarioByUsuarioId_Id(usuarioId);
     }
 
     public Iterable<Proveedor> proveedorFindAll() {

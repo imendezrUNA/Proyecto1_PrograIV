@@ -10,28 +10,36 @@
     <div class="body">
         <section id="registro">
             <h2>Regístrese como proveedor</h2>
-            <form th:action="@{/presentation/registro/register}" method="post" th:object="${proveedor}">
-                <div th:if="${error}" th:text="${error}" class="error"></div>
-                <label for="id">Cédula Física o Jurídica:</label>
-                <input type="text" id="id" name="id" required>
+            <form th:action="@{/presentation/registro/register}" method="post" th:object="${registroDTO}">
+                <div th:if="${error}" th:text="${error}" class="error"></div> <!--Mensajes de error generales (controlador)-->
 
-                <label for="nombre">Nombre o Razón Social:</label>
-                <input type="text" id="nombre" name="nombre" required>
+                <label for="idProveedor">Cédula Física o Jurídica:</label>
+                <input type="text" id="idProveedor" th:field="*{idProveedor}" required>
+                <div th:if="${#fields.hasErrors('idProveedor')}" th:errors="*{idProveedor}" class="error"></div>
+
+                <label for="nombreProveedor">Nombre o Razón Social:</label>
+                <input type="text" id="nombreProveedor" th:field="*{nombreProveedor}" required>
+                <div th:if="${#fields.hasErrors('nombreProveedor')}" th:errors="*{nombreProveedor}" class="error"></div>
 
                 <label for="correoElectronico">Correo Electrónico:</label>
-                <input type="email" id="correoElectronico" name="correoElectronico" required>
+                <input type="email" id="correoElectronico" th:field="*{correoElectronico}" required>
+                <div th:if="${#fields.hasErrors('correoElectronico')}" th:errors="*{correoElectronico}" class="error"></div>
 
                 <label for="numeroTelefono">Número de Teléfono:</label>
-                <input type="text" id="numeroTelefono" name="numeroTelefono" required>
+                <input type="text" id="numeroTelefono" th:field="*{numeroTelefono}" required>
+                <div th:if="${#fields.hasErrors('numeroTelefono')}" th:errors="*{numeroTelefono}" class="error"></div>
 
                 <label for="direccion">Dirección:</label>
-                <input type="text" id="direccion" name="direccion" required>
+                <input type="text" id="direccion" th:field="*{direccion}" required>
+                <div th:if="${#fields.hasErrors('direccion')}" th:errors="*{direccion}" class="error"></div>
 
-                <label for="nombreUsuarioRegistro">Nombre de Usuario:</label>
-                <input type="text" id="nombreUsuarioRegistro" name="nombreUsuario" required>
+                <label for="nombreUsuario">Nombre de Usuario:</label>
+                <input type="text" id="nombreUsuario" th:field="*{nombreUsuario}" required>
+                <div th:if="${#fields.hasErrors('nombreUsuario')}" th:errors="*{nombreUsuario}" class="error"></div>
 
-                <label for="contrasenaRegistro">Contraseña:</label>
-                <input type="password" id="contrasenaRegistro" name="contrasena" required>
+                <label for="contrasena">Contraseña:</label>
+                <input type="password" id="contrasena" th:field="*{contrasena}" required>
+                <div th:if="${#fields.hasErrors('contrasena')}" th:errors="*{contrasena}" class="error"></div>
 
                 <button type="submit">Registrar</button>
             </form>
