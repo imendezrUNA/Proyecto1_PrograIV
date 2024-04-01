@@ -1,0 +1,128 @@
+html, body {
+    height: 100%;
+}
+
+/* Estilos compartidos */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: whitesmoke;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.header, .footer {
+    background-color: mediumseagreen;
+    color: white;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* centrar elementos verticalmente */
+}
+
+.footer {
+    margin-top: auto;
+    justify-content: center;
+}
+
+.footer h2 {
+    margin-right: 20px;
+}
+
+header .logo img {
+    height: 150px;
+}
+
+.logo img {
+    height: 70px;
+    vertical-align: middle;
+}
+
+.titulo {
+    font-size: x-large;
+    margin: 0 20px;
+}
+
+.Menu {
+    list-style: none;
+    padding-left: 0;
+    display: flex;
+    margin: 0;
+}
+
+.Menu li {
+    margin-right: 20px;
+}
+
+.Menu a {
+    color: white;
+    text-decoration: none;
+}
+
+/* acomodar menú verticalmente cuando la ventana es pequeña */
+@media screen and (max-width: 630px) {
+    .Menu {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .Menu li {
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+}
+
+/* Estilos específicos */
+#login, #registro {
+    background-color: white;
+    padding: 20px;
+    margin: 20px auto; /* espaciado con los bordes de la pantalla */
+    width: calc(100% - 80px); /* ajusta el ancho para mantener el margen */
+    max-width: 400px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#login h2, #registro h2 {
+    color: #0F9D58;
+}
+
+#login form, #registro form {
+    width: 80%;
+}
+
+label {
+    display: block;
+    margin-top: 20px;
+}
+
+input[type="text"], input[type="email"], input[type="password"], button[type="submit"] {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid gainsboro;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+button[type="submit"] {
+    background-color: #0F9D58;
+    color: white;
+    cursor: pointer;
+    margin: 20px 0;
+    border: none;
+}
+
+button[type="submit"]:hover {
+    background-color: seagreen;
+}
+
+.error {
+    color: indianred;
+    margin-top: 5px;
+}
