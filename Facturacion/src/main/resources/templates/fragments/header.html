@@ -7,9 +7,12 @@
         <ul class="Menu">
             <li><a href="/presentation/about/show"><h3>Acerca de...</h3></a></li>
             <th:block th:if="${session.usuario != null}">
-                <!-- Lógica específica para proveedor o administrador -->
-                <!--<th:block th:if="${session.usuario.getRol().equals('PROVEEDOR')}"></th:block>
-                <th:block th:if="${session.usuario.getRol().equals('ADMINISTRADOR')}"></th:block>-->
+                <th:block th:if="${session.usuario.getRol().name() == 'PROVEEDOR'}">
+                    <li><a href="/presentation/clientes/show"><h3>Clientes</h3></a></li>
+                </th:block>
+                <th:block th:if="${session.usuario.getRol().name() == 'ADMINISTRADOR'}">
+                    <!-- Lógica específica para administrador -->
+                </th:block>
                 <li><a href="#" th:href="@{/presentation/login/logout}"><h3>Salir</h3></a></li>
             </th:block>
             <th:block th:unless="${session.usuario != null}">
