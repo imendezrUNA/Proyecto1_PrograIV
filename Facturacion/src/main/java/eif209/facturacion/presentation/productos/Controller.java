@@ -31,11 +31,17 @@ public class Controller {
 
     @PostMapping("/presentation/productos/add")
     public String search(
-        @ModelAttribute
-        ("productosSearch") Producto productoSearch, HttpSession httpSession, Model model) {
+            @ModelAttribute("productosGuardar") Producto productoGuardar, HttpSession httpSession,
+            Model model) {
+
         Usuario usuario = (Usuario) httpSession.getAttribute("usuario");
-        // Verificar si el usuario de la sesión coincide con el usuario recibido en la URL
+        //le asigno al producto que se va a guardar el proveedor que lo extraigo dsde el htmlsession
+        productoGuardar.setProveedor(usuario.getProveedor());
+        //aqui le estoy pasando el mismo producto que le pido a la vista
+        service.guardarProducto(productoGuardar);
+        //este primer add lo que hace es devolver la lista de productos que esta en la db
         model.addAttribute("productos", service.findProductByProveId((long) usuario.getProveedor().getId()));
+        //este otro devuelve un nuevo producto para que el formulario salga en blanco
         model.addAttribute("productoNuevo", new Producto());
         return "presentation/productos/View";
         }

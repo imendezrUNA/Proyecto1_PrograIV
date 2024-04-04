@@ -126,3 +126,41 @@ button[type="submit"]:hover {
     color: indianred;
     margin-top: 5px;
 }
+.container {
+    display: flex;
+}
+
+.add-product,
+.product-list {
+    flex: 1;
+    margin-right: 20px;
+}
+
+.add-product {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.product-list {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #f2f2f2;
+    text-align: left;
+}

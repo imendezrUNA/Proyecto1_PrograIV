@@ -95,4 +95,9 @@ public class Service {
     public Iterable<Cliente> clienteSearch (Proveedor proveedor, String nombreCliente) {
         return null; //cambiar
     }
+
+    public void guardarProducto(Producto productoGuardar) {
+        productoRepository.save(productoGuardar);
+
+    }
 }
