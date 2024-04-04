@@ -32,7 +32,7 @@ public class Producto {
     private Collection<Detallefactura> detallefacturasById;
     @ManyToOne
     @JoinColumn(name = "proveedorID", referencedColumnName = "ID", nullable = false)
-    private Proveedor proveedorByProveedorId;
+    private Proveedor proveedor;
 
     public int getId() {
         return id;
@@ -87,11 +87,11 @@ public class Producto {
         this.detallefacturasById = detallefacturasById;
     }
 
-    public Proveedor getProveedorByProveedorId() {
-        return proveedorByProveedorId;
+    public Proveedor getProveedor() {
+        return proveedor;
     }
 
-    public void setProveedorByProveedorId(Proveedor proveedorByProveedorId) {
-        this.proveedorByProveedorId = proveedorByProveedorId;
+    public void setProveedor(Proveedor proveedor) {
+        this.proveedor = proveedor;
     }
 }

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Facturación</title>
+    <link rel="stylesheet" href="/css/style.css" th:href="@{/css/style.css}">
+</head>
+<body>
+<header th:replace="~{fragments/header :: header}"></header>
+<h2>Proveedores</h2>
+<!--Desarrollar vista-->
+<div class="container">
+    <div class="add-product">
+        <h2>Agregar Nuevo Producto</h2>
+        <form action="/presentation/productos/add" method="post">
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" name="nombre" required>
+            <br>
+            <label for="descripcion">Descripción:</label>
+            <textarea id="descripcion" name="descripcion" required></textarea>
+            <br>
+            <label for="precio">Precio:</label>
+            <input type="number" id="precio" name="precio" step="0.01" required>
+            <br>
+            <!-- Agrega más campos si es necesario -->
+            <button type="submit">Agregar Producto</button>
+        </form>
+    </div>
+    <hr>
+    <div class="product-list">
+        <h2>Lista de Productos</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Precio</th>
+                <!-- Agrega más columnas si es necesario -->
+            </tr>
+            </thead>
+            <tbody>
+            <!-- Itera sobre la lista de productos y muestra cada producto en una fila -->
+            <tr th:each="producto : ${productos}">
+                <td th:text="${producto.id}">ID</td>
+                <td th:text="${producto.nombre}">Nombre</td>
+                <td th:text="${producto.descripcion}">Descripción</td>
+                <td th:text="${producto.precio}">Precio</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+</html>

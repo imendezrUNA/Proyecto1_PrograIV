@@ -1,6 +1,7 @@
 package eif209.facturacion.logic;
 
 import eif209.facturacion.data.ClienteRepository;
+import eif209.facturacion.data.ProductoRepository;
 import eif209.facturacion.data.ProveedorRepository;
 import eif209.facturacion.data.UsuarioRepository;
 import eif209.facturacion.dto.ProveedorRegistroDTO;
@@ -17,6 +18,8 @@ public class Service {
     private ProveedorRepository proveedorRepository;
     @Autowired
     private ClienteRepository clienteRepository;
+    @Autowired
+    private ProductoRepository productoRepository;
 
     @Transactional
     public boolean registrarProveedorYUsuario(ProveedorRegistroDTO registroDTO) {
@@ -51,6 +54,22 @@ public class Service {
         proveedorRepository.save(nuevoProveedor);
 
         return true;
+    }
+    public boolean registroDeProducto(Producto producto){
+        if(productoRepository.findProductoById(producto.getId()).equals(producto.getId())){
+            return false;
+        }
+        //crea nuevo producto
+        Producto nuevo = new Producto();
+        nuevo.setId(producto.getId());
+        nuevo.setDescripcion(producto.getDescripcion());
+        nuevo.setNombre(producto.getNombre());
+        nuevo.setPrecio(producto.getPrecio());
+        nuevo.setProveedor(producto.getProveedor());
+        return true;
+    }
+    public Iterable<Producto> findProductByProveId( Long proveId) {
+        return productoRepository.findProductoByProveedorId(proveId);
     }
 
     public Optional<Usuario> usuarioRead(String nombreUsuario) {

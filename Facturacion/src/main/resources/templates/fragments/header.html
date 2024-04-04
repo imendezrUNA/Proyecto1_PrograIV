@@ -1,14 +1,16 @@
-<header class="header" th:fragment="header">
-        <div class="logo">
-            <img th:src="@{/images/logo.png}" alt="logo">
-        </div>
-    <div class="titulo"><h1>Facturación Electrónica</h1></div>
+\<header class="header" th:fragment="header">
+    <div class="logo">
+        <img th:src="@{/images/logo.png}" alt="logo">
+    </div>
+    <div class="titulo">
+        <h1>Facturación Electrónica</h1></div>
     <div>
         <ul class="Menu">
             <li><a href="/presentation/about/show"><h3>Acerca de...</h3></a></li>
             <th:block th:if="${session.usuario != null}">
                 <th:block th:if="${session.usuario.getRol().name() == 'PROVEEDOR'}">
                     <li><a href="/presentation/clientes/show"><h3>Clientes</h3></a></li>
+                    <li><a href="/presentation/productos/show"><h3>Productos</h3></a></li>
                 </th:block>
                 <th:block th:if="${session.usuario.getRol().name() == 'ADMINISTRADOR'}">
                     <!-- Lógica específica para administrador -->

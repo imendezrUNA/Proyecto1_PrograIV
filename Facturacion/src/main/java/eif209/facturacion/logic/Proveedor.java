@@ -32,7 +32,7 @@ public class Proveedor {
     private String direccion;
     @OneToMany(mappedBy = "proveedorByProveedorId", fetch = FetchType.LAZY)
     private Collection<Factura> facturasById;
-    @OneToMany(mappedBy = "proveedorByProveedorId", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "proveedor", fetch = FetchType.LAZY)
     private Collection<Producto> productosById;
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "usuarioID", referencedColumnName = "ID", nullable = false)
