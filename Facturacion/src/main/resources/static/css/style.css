@@ -153,14 +153,81 @@ button[type="submit"]:hover {
 table {
     width: 100%;
     border-collapse: collapse;
+    margin-top: 20px;
 }
 
 th, td {
-    padding: 8px;
+    padding: 10px;
+    text-align: left;
     border-bottom: 1px solid #ddd;
 }
 
 th {
-    background-color: #f2f2f2;
+    background-color: #0F9D58;
+    color: white;
     text-align: left;
+}
+
+th:last-child, td:last-child {
+    text-align: center;
+}
+
+th a {
+    color: white;
+    text-decoration: none;
+}
+
+.mensaje-exito, .mensaje-error {
+    padding: 10px;
+    margin: 20px 0;
+    border-radius: 5px;
+    color: white;
+    text-align: center;
+    width: 100%;
+}
+
+.mensaje {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 60%;
+    max-width: 600px;
+    margin: 20px auto; /* Centrado y espacio alrededor */
+}
+
+.mensaje-exito {
+    background-color: #0F9D58;
+}
+
+.mensaje-error {
+    background-color: #f44336;
+}
+
+.titulo-cuerpo {
+    text-align: center;
+    color: #0F9D58;
+    margin: 20px 0;
+}
+
+.proveedores {
+    margin: 20px auto;
+    width: calc(100% - 40px); /* ancho para no tocar los bordes */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+table.proveedores td a {
+    color: mediumseagreen;
+    text-decoration: none;
+    margin: 0 5px;
+}
+
+table.proveedores td a:hover {
+    text-decoration: underline;
+}
+
+table.proveedores th, table.proveedores td {
+    padding: 12px 15px; /* Ajuste del padding para más espacio */
 }

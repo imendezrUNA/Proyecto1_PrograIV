@@ -13,7 +13,7 @@
                     <li><a href="/presentation/productos/show"><h3>Productos</h3></a></li>
                 </th:block>
                 <th:block th:if="${session.usuario.getRol().name() == 'ADMINISTRADOR'}">
-                    <!-- Lógica específica para administrador -->
+                    <li><a href="/presentation/proveedores/show"><h3>Proveedores</h3></a></li>
                 </th:block>
                 <li><a href="#" th:href="@{/presentation/login/logout}"><h3>Salir</h3></a></li>
             </th:block>

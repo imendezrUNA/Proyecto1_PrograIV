@@ -2,13 +2,45 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Facturación</title>
-    <link rel="stylesheet" href="/css/style.css" th:href="@{/css/style.css}">
+    <title>Administración de Proveedores</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
-    <header th:replace="~{fragments/header :: header}"></header>
-    <h2>Proveedores</h2>
-    <!--Desarrollar vista-->
-    <footer th:replace="~{fragments/footer :: footer}"></footer>
+<header th:replace="~{fragments/header :: header}"></header>
+<div class="body">
+    <h2 class="titulo-cuerpo">Listado de Proveedores</h2>
+    <table class="proveedores">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Correo Electrónico</th>
+            <th><a th:href="@{/proveedores/listar(ordenarPor='estado')}">Estado</a></th>
+            <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="proveedor : ${proveedores}">
+            <td th:text="${proveedor.id}">ID</td>
+            <td th:text="${proveedor.nombre}">Nombre</td>
+            <td th:text="${proveedor.correoElectronico}">Correo Electrónico</td>
+            <td th:text="${proveedor.usuarioByUsuarioId.estado}">Estado</td>
+            <td>
+                <a th:href="@{/proveedores/activar/{id}(id=${proveedor.id})}">Activar</a>
+                |
+                <a th:href="@{/proveedores/desactivar/{id}(id=${proveedor.id})}">Desactivar</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <!-- Mensajes de éxito o error -->
+    <div class="mensaje" th:if="${mensaje}">
+        <p class="mensaje-exito" th:text="${mensaje}"></p>
+    </div>
+    <div class="mensaje" th:if="${error}">
+        <p class="mensaje-error" th:text="${error}"></p>
+    </div>
+</div>
+<footer th:replace="~{fragments/footer :: footer}"></footer>
 </body>
 </html>

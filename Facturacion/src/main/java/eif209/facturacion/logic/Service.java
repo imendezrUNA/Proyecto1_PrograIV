@@ -8,6 +8,7 @@ import eif209.facturacion.dto.ProveedorRegistroDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @org.springframework.stereotype.Service("service")
@@ -55,8 +56,22 @@ public class Service {
 
         return true;
     }
-    public boolean registroDeProducto(Producto producto){
-        if(productoRepository.findProductoById(producto.getId()).equals(producto.getId())){
+
+    @Transactional
+    public boolean cambiarEstadoProveedor(Long proveedorId, Usuario.Estado nuevoEstado) {
+        Optional<Proveedor> proveedorOpt = proveedorRepository.findById(proveedorId);
+        if (proveedorOpt.isPresent()) {
+            Proveedor proveedor = proveedorOpt.get();
+            Usuario usuario = proveedor.getUsuarioByUsuarioId();
+            usuario.setEstado(nuevoEstado);
+            usuarioRepository.save(usuario);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean registroDeProducto(Producto producto) {
+        if (productoRepository.findProductoById(producto.getId()).equals(producto.getId())) {
             return false;
         }
         //crea nuevo producto
@@ -68,7 +83,8 @@ public class Service {
         nuevo.setProveedor(producto.getProveedor());
         return true;
     }
-    public Iterable<Producto> findProductByProveId( Long proveId) {
+
+    public Iterable<Producto> findProductByProveId(Long proveId) {
         return productoRepository.findProductoByProveedorId(proveId);
     }
 
@@ -84,6 +100,14 @@ public class Service {
         return proveedorRepository.findAll();
     }
 
+    public List<Proveedor> proveedorFindAllSortedByEstadoAsc() {
+        return proveedorRepository.findAllByUsuarioEstadoOrderByEstadoAsc();
+    }
+
+    public List<Proveedor> proveedorFindAllSortedByEstadoDesc() {
+        return proveedorRepository.findAllByUsuarioEstadoOrderByEstadoDesc();
+    }
+
     public Iterable<Cliente> clienteFindAll() {
         return clienteRepository.findAll();
     }
@@ -92,7 +116,7 @@ public class Service {
         return null; //cambiar
     }
 
-    public Iterable<Cliente> clienteSearch (Proveedor proveedor, String nombreCliente) {
+    public Iterable<Cliente> clienteSearch(Proveedor proveedor, String nombreCliente) {
         return null; //cambiar
     }
 
