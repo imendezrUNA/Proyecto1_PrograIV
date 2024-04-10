@@ -37,3 +37,9 @@ INSERT INTO DetalleFactura (facturaID, productoID, cantidad, precioUnitario, sub
 (1, 2, 1, 200.00, 200.00),
 (2, 3, 2, 150.00, 300.00),
 (2, 4, 1, 250.00, 250.00);
+
+-- Asociar proveedores con clientes habituales
+INSERT INTO ProveedorCliente (proveedorID, clienteID) VALUES
+(123456789, 123123123), -- Proveedor Uno tiene al Cliente Uno
+(123456789, 234234234), -- Proveedor Uno tiene al Cliente Dos
+(234567891, 345345345); -- Proveedor Dos tiene al Cliente Tres

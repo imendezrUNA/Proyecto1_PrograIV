@@ -62,3 +62,11 @@ CREATE TABLE DetalleFactura (
     FOREIGN KEY (facturaID) REFERENCES Factura(ID),
     FOREIGN KEY (productoID) REFERENCES Producto(ID)
 );
+
+CREATE TABLE ProveedorCliente ( -- Relación entre proveedores y clientes
+    proveedorID BIGINT NOT NULL,
+    clienteID BIGINT NOT NULL,
+    PRIMARY KEY (proveedorID, clienteID),
+    FOREIGN KEY (proveedorID) REFERENCES Proveedor(ID),
+    FOREIGN KEY (clienteID) REFERENCES Cliente(ID)
+);
