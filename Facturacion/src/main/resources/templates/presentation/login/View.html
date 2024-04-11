@@ -6,23 +6,21 @@
     <link rel="stylesheet" href="/css/style.css" th:href="@{/css/style.css}">
 </head>
 <body>
-    <header th:replace="~{fragments/header :: header}"></header>
-    <div class="body">
-        <section id="login">
-            <h2>Iniciar sesión</h2>
-            <form th:action="@{/presentation/login/login}" method="post">
-                <label for="nombreUsuario">Nombre de usuario:</label>
-                <input type="text" id="nombreUsuario" name="nombreUsuario" required>
-                <label for="contrasena">Contraseña:</label>
-                <input type="password" id="contrasena" name="contrasena" required>
-                <button type="submit">Iniciar Sesión</button>
-                <div th:if="${param.error}">
-                    <p class="error">Nombre de usuario o contraseña incorrectos</p>
-                </div>
-            </form>
-            <p>¿No tiene cuenta? <a href="/presentation/registro/show">Regístrese aquí</a></p>
-        </section>
-    </div>
-    <footer th:replace="~{fragments/footer :: footer}"></footer>
+<header th:replace="~{fragments/header :: header}"></header>
+<div class="body">
+    <section id="login">
+        <h2>Iniciar sesión</h2>
+        <form th:action="@{/presentation/login/login}" method="post">
+            <label for="nombreUsuario">Nombre de usuario:</label>
+            <input type="text" id="nombreUsuario" name="nombreUsuario" required>
+            <label for="contrasena">Contraseña:</label>
+            <input type="password" id="contrasena" name="contrasena" required>
+            <button type="submit">Iniciar Sesión</button>
+            <div th:if="${error}" th:text="${error}"></div>
+        </form>
+        <p>¿No tiene cuenta? <a href="/presentation/registro/show">Regístrese aquí</a></p>
+    </section>
+</div>
+<footer th:replace="~{fragments/footer :: footer}"></footer>
 </body>
 </html>

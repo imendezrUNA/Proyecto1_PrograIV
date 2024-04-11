@@ -3,14 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <title>Facturación</title>
-    <link rel="stylesheet" href="/css/style.css" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
-    <header th:replace="~{fragments/header :: header}"></header>
-    <div class="body">
-        <h2>Acerca de:</h2>
-        <!--Desarrollar...-->
+<header th:replace="~{fragments/header :: header}"></header>
+<div class="body">
+    <div>
+        <h2 class="titulo-about">Integrantes del equipo:</h2>
     </div>
-    <footer th:replace="~{fragments/footer :: footer}"></footer>
+    <div class="miembros">
+        <div class="miembro">
+            <img class="miembro-imagen" th:src="@{/images/user_green.png}" alt="Logo Usuario">
+            <h3>
+                Isaac Méndez Rodríguez
+            </h3>
+        </div>
+        <div class="miembro">
+            <img class="miembro-imagen" th:src="@{/images/user_green.png}" alt="Logo Usuario">
+            <h3>
+                Anthony Salazar Brenes
+            </h3>
+        </div>
+        <div class="miembro">
+            <img class="miembro-imagen" th:src="@{/images/user_green.png}" alt="Logo Usuario">
+            <h3>
+                Jean Alfaro Montero
+            </h3>
+        </div>
+    </div>
+</div>
+<footer th:replace="~{fragments/footer :: footer}"></footer>
 </body>
 </html>

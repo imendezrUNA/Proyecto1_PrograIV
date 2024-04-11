@@ -409,3 +409,17 @@ table#tablaFacturas tr:nth-child(even){
 table#tablaFacturas tr:nth-child(odd){
     background: #cfffd4;
 }
+
+.titulo-about {
+    text-align: center;
+}
+
+.miembros {
+    margin-top: 50px;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.miembro-imagen {
+    height: 200px;
+}
