@@ -4,6 +4,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 @Repository
 public interface ClienteRepository extends CrudRepository<Cliente, Long> {
@@ -12,6 +13,8 @@ public interface ClienteRepository extends CrudRepository<Cliente, Long> {
     Collection<Cliente> findClienteByProveedorId(Long proveedorId);
     Iterable<Cliente> findAll();
 
+    @Query("select c from Cliente c where c.nombre like ?1% and c.proveedor.id = ?2")
+    Collection<Cliente> findClientesContengan(String clienteNom, Long proveedorId);
 
     @Override
     <S extends Cliente> S save(S entity);

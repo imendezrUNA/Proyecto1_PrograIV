@@ -25,6 +25,7 @@ public class Controller {
         Optional<Usuario> usuarioDBOpt = service.usuarioRead(nombreUsuario);
         if (usuarioDBOpt.isPresent() && contrasena.equals(usuarioDBOpt.get().getContrasena())) {
             Usuario usuarioDB = usuarioDBOpt.get();
+
             httpSession.setAttribute("usuario", usuarioDB);
             if (Usuario.Rol.PROVEEDOR.equals(usuarioDB.getRol()) && Usuario.Estado.ACTIVO.equals(usuarioDB.getEstado())) {
                 return "redirect:/presentation/facturar/show";

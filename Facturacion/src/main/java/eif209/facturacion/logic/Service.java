@@ -208,4 +208,9 @@ public class Service {
     public Optional<Cliente> clienteporID(long id){
         return clienteRepository.findById(id);
     }
+
+    public List<Cliente> clientePorNombre(String clienteNom, Long idProovedor){
+        return (List<Cliente>) clienteRepository.findClientesContengan(clienteNom, idProovedor);
+    }
+
 }

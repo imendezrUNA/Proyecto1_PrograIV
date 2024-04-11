@@ -8,8 +8,10 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.w3c.dom.ls.LSException;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @org.springframework.stereotype.Controller("clientes")
@@ -29,13 +31,15 @@ public class Controller {
     }
     @PostMapping("/presentation/clientes/search")
     public String search(
-            @ModelAttribute("clienteSearch") Cliente clienteSearch,
-            @ModelAttribute(name="proveedor", binding=false) Proveedor proveedor,
-            Model model) {
-        model.addAttribute("clientes", service.clienteSearch (proveedor, clienteSearch.getNombre()));
-        model.addAttribute("clienteEdit", new Cliente());
+            @ModelAttribute("buscar") String search,
+            Model model, HttpSession httpSession) {
+
+        Usuario usuario = (Usuario) httpSession.getAttribute("usuario");
+        List<Cliente> clientes = service.clientePorNombre(search, usuario.getProveedor().getId());
+        model.addAttribute("clientes", clientes);
         return "presentation/clientes/View";
     }
+
     @PostMapping("/presentation/clientes/add")
     public String agregarCliente(
             @ModelAttribute("clienteGuardar") Cliente clienteGuardar, HttpSession httpSession,
@@ -66,6 +70,16 @@ public class Controller {
         service.guardarCliente(cliente);
         model.addAttribute("clientes", service.findClienteByProveedorId((long) usuario.getProveedor().getId()));
         return "clientes";
+    }
+
+    @PostMapping("/presentation/clientes/selected")
+    public String Selected(@ModelAttribute("idCliente") String clienteId,
+        Model model) {
+                Cliente clienteSearch = service.clienteRead(clienteId).get();
+
+            model.addAttribute("clienteSearch", clienteSearch);
+            model.addAttribute("clienteEdit", new Cliente());
+            return "redirect:/presentation/clientes/show";
     }
 
 

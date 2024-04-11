@@ -27,7 +27,9 @@ CREATE TABLE Cliente (
     correoElectronico VARCHAR(255) NOT NULL UNIQUE,
     numeroTelefono VARCHAR(8) NOT NULL UNIQUE,
     direccion VARCHAR(255),
-    PRIMARY KEY (ID)
+    proveedorID BIGINT NOT NULL,
+    PRIMARY KEY (ID),
+    FOREIGN KEY (proveedorID) REFERENCES Proveedor(ID)
 );
 
 CREATE TABLE Producto (
@@ -63,10 +65,3 @@ CREATE TABLE DetalleFactura (
     FOREIGN KEY (productoID) REFERENCES Producto(ID)
 );
 
-CREATE TABLE ProveedorCliente ( -- Relación entre proveedores y clientes
-    proveedorID BIGINT NOT NULL,
-    clienteID BIGINT NOT NULL,
-    PRIMARY KEY (proveedorID, clienteID),
-    FOREIGN KEY (proveedorID) REFERENCES Proveedor(ID),
-    FOREIGN KEY (clienteID) REFERENCES Cliente(ID)
-);

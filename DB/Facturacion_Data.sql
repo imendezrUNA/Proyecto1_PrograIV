@@ -14,10 +14,11 @@ INSERT INTO Proveedor (ID, usuarioID, nombre, correoElectronico, numeroTelefono,
 (345678912, 4, 'Proveedor Tres', 'proveedor3@ejemplo.com', '34567891', 'Dirección proveedor 3');
 
 -- Insertar clientes
-INSERT INTO Cliente (ID, nombre, correoElectronico, numeroTelefono, direccion) VALUES
-(123123123, 'Cliente Uno', 'cliente1@ejemplo.com', '11111111', 'Dirección cliente 1'),
-(234234234, 'Cliente Dos', 'cliente2@ejemplo.com', '22222222', 'Dirección cliente 2'),
-(345345345, 'Cliente Tres', 'cliente3@ejemplo.com', '33333333', 'Dirección cliente 3');
+INSERT INTO Cliente (ID, nombre, correoElectronico, numeroTelefono, direccion, proveedorID) VALUES
+(123123123, 'Cliente Uno', 'cliente1@ejemplo.com', '11111111', 'Dirección cliente 1', '123456789'),
+(234234234, 'Cliente Dos', 'cliente2@ejemplo.com', '22222222', 'Dirección cliente 2', '123456789'),
+(345345345, 'Cliente Tres', 'cliente3@ejemplo.com', '33333333', 'Dirección cliente 3', '234567891');
+
 
 -- Insertar productos para el proveedor activo (ID 123456789)
 INSERT INTO Producto (nombre, descripcion, precio, proveedorID) VALUES
@@ -38,8 +39,3 @@ INSERT INTO DetalleFactura (facturaID, productoID, cantidad, precioUnitario, sub
 (2, 3, 2, 150.00, 300.00),
 (2, 4, 1, 250.00, 250.00);
 
--- Asociar proveedores con clientes habituales
-INSERT INTO ProveedorCliente (proveedorID, clienteID) VALUES
-(123456789, 123123123), -- Proveedor Uno tiene al Cliente Uno
-(123456789, 234234234), -- Proveedor Uno tiene al Cliente Dos
-(234567891, 345345345); -- Proveedor Dos tiene al Cliente Tres

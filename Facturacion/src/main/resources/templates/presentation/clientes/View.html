@@ -19,9 +19,19 @@
 <div class="body">
     <div>
         <h1>Listado de Clientes</h1>
-        <table>
+        <div class="busqueda">
+            <label>Cliente</label>
+            <form method="POST" th:action="@{/presentation/clientes/search}">
+                <input type="text" name="buscar" required>
+                <button type="submit">Buscar</button>
+            </form>
+            <p style="padding-left: 10%;" th:if="${param.error}" class="error">No hay ninguna pesona con este nombre</p>
+        </div>
+
+        <table style="max-height: 300px;">
             <thead>
             <tr>
+                <th>...</th>
                 <th>Identificación</th>
                 <th>Nombre</th>
                 <th>Correo Electrónico</th>
@@ -32,12 +42,23 @@
             </thead>
             <tbody>
             <tr th:each="cliente : ${clientes}">
-                <td th:text="${cliente.id}"></td>
+                <td>
+                    <form th:action="@{/presentation/facturar/searchClient}" method="post">
+                        <input type="hidden" name="idCliente" th:value="${cliente.id}">
+                    <button type="submit" class="btn btn-primary">🔍︎</button>
+                    </form>
+                </td>
+                <td th:text="${cliente.getId()}"></td>
                 <td th:text="${cliente.nombre}"></td>
                 <td th:text="${cliente.correoElectronico}"></td>
                 <td th:text="${cliente.numeroTelefono}"></td>
                 <td th:text="${cliente.direccion}"></td>
-                <td><button type="submit" class="btn btn-primary">Edit</button></td>
+                <td>
+                    <form th:action="@{/presentation/clientes/selected}" method="post">
+                        <input type="hidden" name="idCliente" th:value="${cliente.id}">
+                    <button type="submit" class="btn btn-primary">Edit</button>
+                    </form>
+                </td>
             </tr>
             </tbody>
         </table>
@@ -46,19 +67,19 @@
         <h2>Agregar Nuevo Cliente</h2>
         <form action="/presentation/clientes/add" method="post">
             <label for="id">Identificación:</label>
-            <input type="text" id="id" name="id" required>
+            <input type="text" id="id" name="id" th:value="${clienteSearch.getId()}" required>
             <br>
             <label for="nombre">Nombre:</label>
-            <input type="text" id="nombre" name="nombre" required>
+            <input type="text" id="nombre" name="nombre" th:value="${clienteSearch.getNombre()}" required>
             <br>
             <label for="correoElectronico">Correo Electrónico:</label>
-            <input type="email" id="correoElectronico" name="correoElectronico" required>
+            <input type="email" id="correoElectronico" name="correoElectronico" th:value="${clienteSearch.getCorreoElectronico()}" required>
             <br>
             <label for="numeroTelefono">Número de Teléfono:</label>
-            <input type="text" id="numeroTelefono" name="numeroTelefono" required>
+            <input type="text" id="numeroTelefono" name="numeroTelefono" th:value="${clienteSearch.getNumeroTelefono()}" required>
             <br>
             <label for="direccion">Dirección:</label>
-            <input type="text" id="direccion" name="direccion" required>
+            <input type="text" id="direccion" name="direccion" th:value="${clienteSearch.getDireccion()}" required>
             <br>
             <button type="submit">Agregar Cliente</button>
         </form>

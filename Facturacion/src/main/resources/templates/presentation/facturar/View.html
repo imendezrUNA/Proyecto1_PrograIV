@@ -26,7 +26,9 @@
                         <form th:action="@{/presentation/facturar/searchClient}" method="post">
                         <input type="text" id="idCliente" name="idCliente" placeholder="identificacion" required>
                         <button type="submit">✔</button>
-
+                        </form>
+                        <form th:action="@{/presentation/clientes/show}" method="get">
+                        <button type="submit">🔍︎</button>
                         </form>
                         <p style="padding-left: 10%;" th:if="${param.error}" class="error">La identificacíon no pertenece a ningún Cliente</p>
                     </div>
