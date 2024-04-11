@@ -32,6 +32,9 @@ public class Cliente {
     private String direccion;
     @OneToMany(mappedBy = "clienteByClienteId")
     private Collection<Factura> facturasById;
+    @ManyToOne
+    @JoinColumn(name = "proveedorID", referencedColumnName = "ID", nullable = false)
+    private Proveedor proveedor;
 
     public long getId() {
         return id;
@@ -92,5 +95,8 @@ public class Cliente {
 
     public void setFacturasById(Collection<Factura> facturasById) {
         this.facturasById = facturasById;
+    }
+    public void setProveedor(Proveedor proveedor) {
+        this.proveedor = proveedor;
     }
 }

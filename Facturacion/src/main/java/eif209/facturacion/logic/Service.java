@@ -97,6 +97,9 @@ public class Service {
     public Iterable<Producto> findProductByProveId(Long proveId) {
         return productoRepository.findProductoByProveedorId(proveId);
     }
+    public Iterable<Cliente> findClienteByProveedorId( Long proveId) {
+        return clienteRepository.findClienteByProveedorId(proveId);
+    }
 
     public Optional<Usuario> usuarioRead(String nombreUsuario) {
         return usuarioRepository.findByNombreUsuario(nombreUsuario);
@@ -129,8 +132,8 @@ public class Service {
         return clienteRepository.findAll();
     }
 
-    public Iterable<Cliente> clienteReadAll(Proveedor proveedor) {
-        return null; //cambiar
+    public Iterable<Cliente> clienteReadAll(long id) {
+        return clienteRepository.findClienteByProveedorId(id); //cambiar
     }
 
     public Iterable<Cliente> clienteSearch(Proveedor proveedor, String nombreCliente) {
@@ -141,6 +144,7 @@ public class Service {
         productoRepository.save(productoGuardar);
 
     }
+
 
     @Transactional
     public boolean actualizarProveedor(Proveedor proveedorActualizado) {
@@ -196,4 +200,12 @@ public class Service {
         return facturaRepository.findById(id).get();
     }
 
+
+    public void guardarCliente(Cliente clienteGuardar) {
+        clienteRepository.save(clienteGuardar);
+
+    }
+    public Optional<Cliente> clienteporID(long id){
+        return clienteRepository.findById(id);
+    }
 }

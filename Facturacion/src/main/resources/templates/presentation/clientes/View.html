@@ -4,29 +4,66 @@
     <meta charset="UTF-8">
     <title>Facturación</title>
     <link rel="stylesheet" href="/css/style.css" th:href="@{/css/style.css}">
+    <style>
+        .body {
+            display: flex;
+            justify-content: space-between;
+        }
+        .body > div {
+            width: 48%;
+        }
+    </style>
 </head>
 <body>
-    <header th:replace="~{fragments/header :: header}"></header>
-    <div class="body">
-        <div>
-            <table></table>
-        </div>
-        <div>
-            <h1 class="caption">Editar...</h1>
-            <form action="presentation/clientes/create" th:object="${clienteEdit}" method="post">
-                <div class="form">
-                    <div>
-                        <div>Identificación</div>
-                        <div><input type="text" th:field="*{id}"></div>
-                    </div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div class="heading"></div>
-                </div>
-            </form>
-        </div>
+<header th:replace="~{fragments/header :: header}"></header>
+<div class="body">
+    <div>
+        <h1>Listado de Clientes</h1>
+        <table>
+            <thead>
+            <tr>
+                <th>Identificación</th>
+                <th>Nombre</th>
+                <th>Correo Electrónico</th>
+                <th>Número de Teléfono</th>
+                <th>Dirección</th>
+                <th>...</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="cliente : ${clientes}">
+                <td th:text="${cliente.id}"></td>
+                <td th:text="${cliente.nombre}"></td>
+                <td th:text="${cliente.correoElectronico}"></td>
+                <td th:text="${cliente.numeroTelefono}"></td>
+                <td th:text="${cliente.direccion}"></td>
+                <td><button type="submit" class="btn btn-primary">Edit</button></td>
+            </tr>
+            </tbody>
+        </table>
     </div>
-    <footer th:replace="~{fragments/footer :: footer}"></footer>
+    <div class="add-product">
+        <h2>Agregar Nuevo Cliente</h2>
+        <form action="/presentation/clientes/add" method="post">
+            <label for="id">Identificación:</label>
+            <input type="text" id="id" name="id" required>
+            <br>
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" name="nombre" required>
+            <br>
+            <label for="correoElectronico">Correo Electrónico:</label>
+            <input type="email" id="correoElectronico" name="correoElectronico" required>
+            <br>
+            <label for="numeroTelefono">Número de Teléfono:</label>
+            <input type="text" id="numeroTelefono" name="numeroTelefono" required>
+            <br>
+            <label for="direccion">Dirección:</label>
+            <input type="text" id="direccion" name="direccion" required>
+            <br>
+            <button type="submit">Agregar Cliente</button>
+        </form>
+    </div>
+</div>
+<footer th:replace="~{fragments/footer :: footer}"></footer>
 </body>
 </html>
