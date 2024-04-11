@@ -13,7 +13,7 @@ public interface ClienteRepository extends CrudRepository<Cliente, Long> {
     Collection<Cliente> findClienteByProveedorId(Long proveedorId);
     Iterable<Cliente> findAll();
 
-    @Query("select c from Cliente c where c.nombre like ?1% and c.proveedor.id = ?2")
+    @Query("select c from Cliente c where c.nombre like %?1% and c.proveedor.id = ?2")
     Collection<Cliente> findClientesContengan(String clienteNom, Long proveedorId);
 
     @Override
