@@ -1,4 +1,4 @@
-\<header class="header" th:fragment="header">
+<header class="header" th:fragment="header">
     <div class="logo">
         <img th:src="@{/images/logo.png}" alt="logo">
     </div>
@@ -11,6 +11,13 @@
                 <th:block th:if="${session.usuario.getRol().name() == 'PROVEEDOR'}">
                     <li><a href="/presentation/clientes/show"><h3>Clientes</h3></a></li>
                     <li><a href="/presentation/productos/show"><h3>Productos</h3></a></li>
+                    <li><a href="/presentation/perfil/show">
+                        <div class="usuario"><img id="usuario" th:src="@{/images/user.png}" alt="Logo Usuario">
+                            <h3>
+                                <th:block th:text="${session.usuario.getNombreUsuario()}"></th:block>
+                            </h3>
+                        </div>
+                    </a></li>
                 </th:block>
                 <th:block th:if="${session.usuario.getRol().name() == 'ADMINISTRADOR'}">
                     <li><a href="/presentation/proveedores/show"><h3>Proveedores</h3></a></li>

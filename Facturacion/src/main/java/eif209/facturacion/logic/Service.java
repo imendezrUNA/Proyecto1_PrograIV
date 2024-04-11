@@ -124,4 +124,25 @@ public class Service {
         productoRepository.save(productoGuardar);
 
     }
+
+    @Transactional
+    public boolean actualizarProveedor(Proveedor proveedorActualizado) {
+        if (proveedorActualizado == null || proveedorActualizado.getUsuarioByUsuarioId() == null) {
+            return false;
+        }
+
+        Optional<Proveedor> proveedorOpt = proveedorRepository.findById(proveedorActualizado.getId());
+        if (proveedorOpt.isEmpty()) {
+            return false; // No se encontró un proveedor con el ID
+        }
+
+        Proveedor proveedorExistente = proveedorOpt.get();
+        proveedorExistente.setNombre(proveedorActualizado.getNombre());
+        proveedorExistente.setCorreoElectronico(proveedorActualizado.getCorreoElectronico());
+        proveedorExistente.setNumeroTelefono(proveedorActualizado.getNumeroTelefono());
+        proveedorExistente.setDireccion(proveedorActualizado.getDireccion());
+
+        proveedorRepository.save(proveedorExistente);
+        return true;
+    }
 }

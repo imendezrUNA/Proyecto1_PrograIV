@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Facturación</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<header th:replace="~{fragments/header :: header}"></header>
+<div class="body">
+    <h2 class="titulo-cuerpo">Configuración del perfil</h2>
+    <form th:action="@{/presentation/perfil/configurar}" method="post" th:object="${proveedor}">
+        <input type="hidden" th:field="*{id}" />
+
+        <div class="form-group">
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" th:field="*{nombre}" required>
+            <div class="error" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="correoElectronico">Correo Electrónico:</label>
+            <input type="email" id="correoElectronico" th:field="*{correoElectronico}" required>
+            <div class="error" th:if="${#fields.hasErrors('correoElectronico')}" th:errors="*{correoElectronico}"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="numeroTelefono">Número de Teléfono:</label>
+            <input type="text" id="numeroTelefono" th:field="*{numeroTelefono}" required>
+            <div class="error" th:if="${#fields.hasErrors('numeroTelefono')}" th:errors="*{numeroTelefono}"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="direccion">Dirección:</label>
+            <input type="text" id="direccion" th:field="*{direccion}" required>
+            <div class="error" th:if="${#fields.hasErrors('direccion')}" th:errors="*{direccion}"></div>
+        </div>
+
+        <button type="submit">Guardar Cambios</button>
+    </form>
+    <div th:if="${mensaje}">
+        <p class="mensaje-exito" th:text="${mensaje}"></p>
+    </div>
+    <div th:if="${error}">
+        <p class="mensaje-error" th:text="${error}"></p>
+    </div>
+</div>
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+</html>

@@ -75,6 +75,16 @@ header .logo img {
 }
 
 /* Estilos específicos */
+.usuario {
+    display: flex;
+    align-items: center;
+}
+
+#usuario {
+    height: 25px;
+    margin-right: 5px;
+}
+
 #login, #registro {
     background-color: white;
     padding: 20px;
