@@ -136,6 +136,7 @@ button[type="submit"]:hover {
     color: indianred;
     margin-top: 5px;
 }
+
 .container {
     display: flex;
 }
@@ -207,7 +208,7 @@ th a {
 }
 
 .mensaje-exito {
-    background-color: #0F9D58;
+    background-color: mediumseagreen;
 }
 
 .mensaje-error {
@@ -240,4 +241,59 @@ table.proveedores td a:hover {
 
 table.proveedores th, table.proveedores td {
     padding: 12px 15px; /* Ajuste del padding para más espacio */
+}
+
+/* Estilos para la configuración del perfil */
+.configuracion-perfil {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 30px auto;
+    width: 80%;
+    max-width: 500px;
+}
+
+.configuracion-perfil h2.titulo-cuerpo {
+    color: #4CAF50;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.form-group .error {
+    color: #f44336;
+    margin-top: 5px;
+    font-size: 0.875em;
+}
+
+#perfil {
+    margin: auto 400px;
+}
+
+#contenedor-guardar {
+    text-align: center;
+}
+
+#boton-guardar {
+    width: 200px;
 }
