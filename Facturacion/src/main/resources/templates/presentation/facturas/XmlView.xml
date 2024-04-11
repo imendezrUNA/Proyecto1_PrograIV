@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FacturaElectronica>
+    <Clave>50614081900011121314500100001010000000027101002449</Clave>
+    <CodigoActividad>851201</CodigoActividad>
+    <NumeroConsecutivo>00100001010000000027</NumeroConsecutivo>
+    <FechaEmision th:text="${factura.getFecha()}"> </FechaEmision>
+    <Emisor>
+        <Nombre th:text="${factura.getProveedorByProveedorId().getNombre()}"></Nombre>
+        <Identificacion>
+            <Tipo>01</Tipo>
+            <Numero th:text="${factura.getProveedorByProveedorId().getId()}"></Numero>
+        </Identificacion>
+
+        <NombreComercial th:text="${factura.getProveedorByProveedorId().getNombre()}"></NombreComercial>
+    </Emisor>
+    <Receptor>
+        <Nombre th:text="${factura.getClienteByClienteId().getNombre()}"> </Nombre>
+        <Identificacion>
+            <Tipo>01</Tipo>
+            <Numero th:text="${factura.getClienteByClienteId().getId()}"> </Numero>
+        </Identificacion>
+        <CorreoElectronico th:text="${factura.getClienteByClienteId().getCorreoElectronico()}"> </CorreoElectronico>
+        <NombreComercial th:text="${factura.getProveedorByProveedorId().getNombre()}"> </NombreComercial>
+    </Receptor>
+    <CondicionVenta>01</CondicionVenta>
+    <MedioPago>01</MedioPago>
+    <DetalleServicio th:each="d: ${factura.getDetallefacturasById()}">
+        <LineaDetalle>
+            <CodigoComercial>
+                <Tipo>01</Tipo>
+                <Codigo th:text="${d.getId()}"> </Codigo>
+            </CodigoComercial>
+            <Cantidad th:text="${d.getCantidad()}"> </Cantidad>
+            <Detalle th:text="${d.getProductoByProductoId().getNombre()}">  </Detalle>
+            <PrecioUnitario th:text="${d.getProductoByProductoId().getPrecio()}"> </PrecioUnitario>
+            <SubTotal th:text="${d.getSubtotal()}"> </SubTotal>
+        </LineaDetalle>
+    </DetalleServicio>
+    <ResumenFactura>
+        <CodigoTipoMoneda>
+            <CodigoMoneda>CRC</CodigoMoneda>
+            <TipoCambio>1.0</TipoCambio>
+        </CodigoTipoMoneda>
+        <TotalServGravados>0.0000</TotalServGravados>
+        <TotalServExentos>0</TotalServExentos>
+        <TotalMercanciasGravadas>0</TotalMercanciasGravadas>
+        <TotalMercanciasExentas>0.0000</TotalMercanciasExentas>
+        <TotalGravado>0</TotalGravado>
+        <TotalExento>0</TotalExento>
+        <TotalVenta th:text="${factura.getTotal()}"> </TotalVenta>
+        <TotalDescuentos>0</TotalDescuentos>
+        <TotalVentaNeta th:text="${factura.getTotal()}"> </TotalVentaNeta>
+        <TotalImpuesto>0</TotalImpuesto>
+        <TotalComprobante th:text="${factura.getTotal()}"> </TotalComprobante>
+    </ResumenFactura>
+</FacturaElectronica>

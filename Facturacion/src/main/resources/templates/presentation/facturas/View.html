@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/css/style.css" th:href="@{/css/style.css}">
+</head>
+<body>
+<header th:replace="~{fragments/header :: header}"></header>
+<div class="body">
+    <h2 class="centrado" style="padding-left: 43%" th:text="${'Facturas ' + session.usuario.getNombreUsuario()}">Facturas</h2>
+    <div id="divTabla">
+        <table id="tablaFacturas" cellspacing="0">
+            <tr>
+                <td> ID </td>
+                <td> Fecha </td>
+                <td> Total </td>
+                <td> Cliente </td>
+                <td>  </td>
+                <td>  </td>
+            </tr>
+           <tr th:each="f: ${facturas}">
+                <td th:text="${f.getId()}">  </td>
+                <td th:text="${f.getFecha()}">  </td>
+                <td th:text="${f.getTotal()}">  </td>
+                <td th:text="${f.getClienteByClienteId().getNombre()}">  </td>
+
+
+                <td><form th:action="@{/presentation/facturas/pdf}" method="post">
+                     <input type="hidden" name="facturaNumero" th:value="${f.getId()}">
+                     <button type="submit"  style="margin: 0; padding: 0;" > pdf</button>
+                      </form>
+                 </td>
+                 <td> <form th:action="@{/presentation/facturas/xml}" method="post">
+                     <input type="hidden" name="facturaNumero" th:value="${f.getId()}">
+                     <button type="submit" style="margin: 0; padding: 0;"> xml</button>
+                     </form>
+                 </td>
+           </tr>
+        </table>
+    </div>
+</div>
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+</html>

@@ -9,6 +9,8 @@
             <li><a href="/presentation/about/show"><h3>Acerca de...</h3></a></li>
             <th:block th:if="${session.usuario != null}">
                 <th:block th:if="${session.usuario.getRol().name() == 'PROVEEDOR'}">
+                    <li><a href="/presentation/facturar/show"><h3>Facturar</h3></a></li>
+                    <li><a href="/presentation/facturas/show"><h3>Facturas</h3></a></li>
                     <li><a href="/presentation/clientes/show"><h3>Clientes</h3></a></li>
                     <li><a href="/presentation/productos/show"><h3>Productos</h3></a></li>
                     <li><a href="/presentation/perfil/show">

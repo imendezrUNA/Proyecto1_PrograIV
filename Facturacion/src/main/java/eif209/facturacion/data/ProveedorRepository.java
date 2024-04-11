@@ -17,4 +17,6 @@ public interface ProveedorRepository extends CrudRepository<Proveedor, Long> {
 
     @Query("SELECT p FROM Proveedor p JOIN p.usuarioByUsuarioId u ORDER BY u.estado DESC")
     List<Proveedor> findAllByUsuarioEstadoOrderByEstadoDesc();
+
+    Optional<Proveedor> findProveedorByUsuarioByUsuarioId_Id(int usuarioId);
 }

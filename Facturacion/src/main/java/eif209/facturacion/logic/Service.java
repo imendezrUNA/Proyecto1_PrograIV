@@ -4,9 +4,16 @@ import eif209.facturacion.data.ClienteRepository;
 import eif209.facturacion.data.ProductoRepository;
 import eif209.facturacion.data.ProveedorRepository;
 import eif209.facturacion.data.UsuarioRepository;
+
+import eif209.facturacion.data.*;
 import eif209.facturacion.dto.ProveedorRegistroDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+
+
+import java.math.BigDecimal;
+import java.sql.Date;
+import java.time.LocalDate;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,18 +29,21 @@ public class Service {
     @Autowired
     private ProductoRepository productoRepository;
 
+    @Autowired
+    private FacturaRepository facturaRepository;
+    @Autowired
+    private DetallefacturaRepository detallefacturaRepository;
+
     @Transactional
     public boolean registrarProveedorYUsuario(ProveedorRegistroDTO registroDTO) {
         // Verificar si ya existe un usuario con el mismo username
         if (usuarioRepository.findByNombreUsuario(registroDTO.getNombreUsuario()).isPresent()) {
             return false;
         }
-
         // Verificar si ya existe un proveedor con el mismo ID
         if (proveedorRepository.findById(Long.valueOf(registroDTO.getIdProveedor())).isPresent()) {
             return false;
         }
-
         // Crear el nuevo Usuario
         Usuario nuevoUsuario = new Usuario();
         nuevoUsuario.setNombreUsuario(registroDTO.getNombreUsuario());
@@ -93,7 +103,14 @@ public class Service {
     }
 
     public Optional<Proveedor> proveedorRead(int usuarioId) {
-        return proveedorRepository.findByUsuarioByUsuarioId_Id(usuarioId);
+        return proveedorRepository.findProveedorByUsuarioByUsuarioId_Id(usuarioId);
+    }
+    public Optional<Cliente> clienteRead(String clienteId) {
+        return clienteRepository.findByClienteId(clienteId);
+    }
+
+    public Optional<Producto> productoRead(String ProductoId) {
+        return productoRepository.findByProductoById(ProductoId);
     }
 
     public Iterable<Proveedor> proveedorFindAll() {
@@ -145,4 +162,38 @@ public class Service {
         proveedorRepository.save(proveedorExistente);
         return true;
     }
+
+    public List<Factura> facturasByProveedorId(Long provId){
+        return (List<Factura>)facturaRepository.findByProveedorByProveedorIdId(provId);
+    }
+
+    public void registrarFactura(Cliente cliente, Proveedor proveedor, List<Detallefactura> detallesFactura, BigDecimal total){
+
+        LocalDate localDate = LocalDate.now();
+        Factura factura = new Factura();
+        factura.setId(-1);
+        factura.setFecha( Date.valueOf(localDate));
+        factura.setTotal(total);
+        factura.setClienteByClienteId(cliente);
+        factura.setDetallefacturasById(detallesFactura);
+        factura.setProveedorByProveedorId(proveedor);
+        facturaRepository.save(factura);
+        registrarDetallesFactura(detallesFactura);
+    }
+    public Factura getByMaxId(){
+        return facturaRepository.findByMaxId();
+    }
+
+    public void registrarDetallesFactura(List<Detallefactura> detallefacturas){
+        Factura factura = getByMaxId();
+        for (Detallefactura d: detallefacturas){
+            d.setFacturaByFacturaId(factura);
+            d.setSubtotal(d.getSubtotal());
+            detallefacturaRepository.save(d);
+        }
+    }
+    public Factura getFacturaById(int id){
+        return facturaRepository.findById(id).get();
+    }
+
 }

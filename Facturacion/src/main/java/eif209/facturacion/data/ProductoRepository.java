@@ -1,10 +1,10 @@
 package eif209.facturacion.data;
 
-
+import org.springframework.data.jpa.repository.Query;
 import eif209.facturacion.logic.Producto;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
-
+import java.util.Optional;
 import java.util.Collection;
 
 @Repository
@@ -14,4 +14,6 @@ public interface ProductoRepository extends CrudRepository<Producto, Long> {
     Iterable findProductoById(int id);
 
     Collection<Producto> findProductoByProveedorId(Long proveedorId);
+    @Query("select p from Producto p where p.id = ?1")
+    Optional<Producto> findByProductoById(String productoId);
 }

@@ -7,8 +7,75 @@
 </head>
 <body>
     <header th:replace="~{fragments/header :: header}"></header>
-    <h2>Facturar</h2>
-    <!--Desarrollar vista-->
+    <div class="body">
+        <h2 class="centrado">Facturar</h2>
+        <section id="facturar">
+            <div style="display: block;">
+                <div>
+                    <div>
+                        <h1>Proveedor:</h1>
+                        <h2 th:text="${session.usuario.getProveedor().getNombre()}">
+                        </h2>
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        <h1>Cliente: </h1>
+                        <h2 th:text="${cliente.getNombre()}">
+                        </h2>
+                        <form th:action="@{/presentation/facturar/searchClient}" method="post">
+                        <input type="text" id="idCliente" name="idCliente" placeholder="identificacion" required>
+                        <button type="submit">✔</button>
+
+                        </form>
+                        <p style="padding-left: 10%;" th:if="${param.error}" class="error">La identificacíon no pertenece a ningún Cliente</p>
+                    </div>
+                </div>
+                <div class="productos">
+                    <p>Menos</p>
+                    <p>Cant.</p>
+                    <p>Descripción</p>
+                    <p>Precio</p>
+                    <p>Monto</p>
+                    <p>Más</p>
+                </div>
+                <div>
+                    <p id="codigo">Código</p>
+                    <form th:action="@{/presentation/facturar/searchProduct}" method="post">
+                    <input type="text" id="codigoProducto" name="codigoProducto" required>
+                        <button type="submit" >✔</button>
+                    </form>
+                </div>
+                <th:block th:if="${detalles.isEmpty() == false}" >
+
+                    <div  th:each="d: ${detalles}"  class="productos">
+                        <form th:action="@{/presentation/facturar/disminuir}" method="post">
+                            <input type="hidden" name="seleccionado" th:value="${d.getProductoByProductoId().getNombre()}">
+                            <button type="submit">-</button>
+                        </form>
+                        <p th:text="${d.cantidad}"> </p>
+                        <p th:text="${d.productoByProductoId.nombre}"> </p>
+                        <p th:text="${d.getPrecioUnitario()}"></p>
+                        <p th:text="${d.subtotal}">Monto</p>
+                        <form th:action="@{/presentation/facturar/agregar}" method="post">
+                        <input type="hidden" name="seleccionado" th:value="${d.getProductoByProductoId().getNombre()}">
+                        <button type="submit">+</button>
+                        </form>
+                    </div>
+                </th:block>
+                <div>
+                    <p>Total:</p>
+                    <p th:text="${total}"></p>
+                </div>
+            </div>
+
+        </section>
+        <div class="centrado">
+            <form th:action="@{/presentation/facturar/guardar}" method="post" style="width: 10%;">
+                <button type="submit">Guardar</button>
+            </form>
+        </div>
+    </div>
     <footer th:replace="~{fragments/footer :: footer}"></footer>
 </body>
 </html>
